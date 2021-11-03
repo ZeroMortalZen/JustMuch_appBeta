@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel ="stylesheet" href="public/stylesheets/style.css" />
+</head>
+
+<!--Scripts---->
+<script>
+
+	var myCart = [];
+
+	$( "#register" ).click(function() {
+
+		// Get the values
+		var un = $('#username').val();
+
+
+		if(un == ''){
+			alert("too short");
+		} else {
+
+			// Send the data
+			$.post( "/login", { username: un })
+					.done(function( data ) {
+
+						$('#output').html(data);
+					});
+		}
+
+	});
+	// Cart System
+	function addToCart(itemName){
+		// finding out the name of the ITEM we are adding
+		var item = itemName;
+		console.log(item);
+
+		// dynamically find out the qty
+		var qty = $('#'+item).children("option:selected").val();
+		console.log(qty);
+
+		// search the cart and see if we already added
+		// the item. If we did, remove the old qty.
+
+		myCart.forEach(function(itemCurrent, index, array) {
+
+
+
+			if(itemCurrent.includes(item)){
+				console.log("Removing previous reference to " + item);
+				myCart.pop(index);
+			}
+		});
+
+
+		// add the item to the cart
+		myCart.push(item + '-' + qty);
+
+		alert(myCart);
+
+	}
+	//end of Cart System
+
+	//Checkout Script
+	$('[type="submit"]').button();
+
+
+</script>
+<!--end Script---->
+
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1>Just Much</h1>
+		<form action="#">
+			<fieldset>
+			<label for="salutation"></label>
+			<select name="salutation" id="salutation">
+				<option disabled selected><img src="public/images/dropMenu.png"> </option>
+				<option>Home</option>
+				<option>Login</option>
+				<option>Shop</option>
+			</select>
+			</fieldset>
+
+		</form>
+	</div><!-- /header -->
+	<!--- Customer Page ----->
+	<div role="main" class="ui-content">
+		<p>Please Select from Menu </p>
+
+		<!---Menu------>
+
+		<!---Burger---->
+
+		<label for="select-native-1">Double Cheese burger </label>
+
+				<select id="bbq_pizza_qty" name="select-native-2" id="select-native-1" data-mini="true">
+			<option value=""></option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+		<button id="addtocart" onclick="addToCart('bbq_pizza_qty')"> Add To Cart </button>
+
+       <!---end of burger item ---->
+
+			<!----Perroni Pizza--->
+			<label for="select-native-2">Perroni Pizza</label>
+
+				<select id="Perroni_pizza_qty" name="select-native-2" id="select-native-2" data-mini="true">
+					<option value=""></option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+				</select>
+				<button id="addtocart" onclick="addToCart('Perroni_pizza_qty')"> Add To Cart </button>
+               <!----end of item ------>
+
+				<!---Chips--->
+				<label for="select-native-3">Chips</label>
+
+					<select id="Chips_qty" name="select-native-2" id="select-native-3" data-mini="true">
+						<option value=""></option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+					</select>
+					<button id="addtocart" onclick="addToCart('Chips_qty')"> Add To Cart </button>
+					<!---end of item------>
+
+					<!---Coke---->
+					<label for="select-native-4">Coke Cola</label>
+
+						<select id="Coke_Cola_qty" name="select-native-2" id="select-native-4" data-mini="true">
+							<option value=""></option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+						<button id="addtocart" onclick="addToCart('Coke_Cola_qty')"> Add To Cart </button>
+                       <!---end of item ---->
+
+						<!---Spicy Mayo Dip---->
+						<label for="select-native-5">Spicy Mayo Dip</label>
+
+							<select id="Spicy_Mayo_Dip_qty" name="select-native-5" id="select-native-5" data-mini="true">
+								<option value=""></option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+							</select>
+							<button id="addtocart" onclick="addToCart('Spicy_Mayo_Dip_qty')"> Add To Cart </button>
+							<!---end of item ---->
+                             <p><a href="#two" class="ui-btn ui-shadow ui-corner-all">Checkout</a></p>
+
+	</div>
+
+							<!---end of menu----->
+	<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
+
+
+<!---Checkout Page ----->
+	<div data-role="page" id="two">
+
+			<div data-role="header">
+				<h1>Checkout</h1>
+			</div><!-- /header -->
+
+
+					<p><script>document.write(myCart)</script></p>
+
+				<p><a href="#foo">Back to foo</a></p>
+			</div><!-- /content -->
+
+
+
+
+		<div data-role="footer">
+				<h4>Page Footer</h4>
+			</div><!-- /footer -->
+
+	</div><!-- /page -->
+</body>
+</html>
