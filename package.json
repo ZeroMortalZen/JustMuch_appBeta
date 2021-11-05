@@ -1,8 +1,7 @@
 {
-  "name": "myapp",
+  "name": "justmuch_appbeta",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "index.ejs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +9,15 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZeroMortalZen/JustMuch_appBeta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ZeroMortalZen/JustMuch_appBeta/issues"
+  },
+  "homepage": "https://github.com/ZeroMortalZen/JustMuch_appBeta#readme",
+  "description": ""
 }
