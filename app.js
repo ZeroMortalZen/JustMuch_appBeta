@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
-app.use("/styles", express.static(__dirname + '/styles'));
+app.use("/public", express.static('./public/'));
 
 
 // app.use(express.static(path.join(__dirname, 'public')));

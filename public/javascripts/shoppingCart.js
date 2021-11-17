@@ -1,4 +1,4 @@
-$.getScript("databaseConnection.js")
+
 var shoppingCart = (function () {
     // Private methods and properties
     var cart = [];
