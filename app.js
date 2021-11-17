@@ -1,76 +1,51 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express')
+    , routes = require('./routes')
+    , user = require('./routes/users')
+    , http = require('http')
+    , path = require('path');
+//const methodOverride = require('method-override');
+const session = require('express-session');
+const app = express();
+const mysql      = require('mysql');
+let bodyParser=require("body-parser");
+let connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : ''
+});
 
-var validator = require('validator');
+connection.connect();
 
+global.db = connection;
 
-var indexRouter = require('./routes/index');
-// import
-var indexRouter2 = require('./routes/index2');
-
-
-var usersRouter = require('./routes/users');
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+// all environments
+app.set('port', process.env.PORT || 3308);
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-
-// use the route
-app.use('/index2', indexRouter2);
-
-app.use('/users', usersRouter);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static("public"));
+app.use("/styles", express.static(__dirname + '/styles'));
 
 
-app.get('/login',function(req,res){
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}))
 
-  console.log("hello");
-  res.send("all ok")
+// development only
 
-});
+app.get('/', routes.index);//call for main index page
+app.get('/signup', user.signup);//call for signup page
+app.post('/signup', user.signup);//call for signup post
+//app.get('/Login', routes.index);//call for login page
+//app.post('/Login', user.Login);//call for login post
 
-app.post('/login',function(req,res){
-	
-	var user_name=req.body.username;
-	
-	console.log("User name = "+user_name);
-	
-	
-	console.log(validator.isEmpty(user_name));
-	
-	
-	res.send("all ok " + user_name);
-});
+//Middleware
+app.listen("3308", ()=>{
+    console.log("Server Started on port 3308")
+})
 
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-
-
-module.exports = app;
