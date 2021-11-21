@@ -29,3 +29,33 @@ exports.signup = function (req,res) {
   }
 
 }
+////Index page call to database
+  exports.index = function (req,res) {
+    message="";
+    console.log("exports index works")
+    if(req.method == "POST") {
+
+      var post = req.body;
+      var name = post.name;
+      var price = post.price;
+      var QTY = post.count;
+
+
+
+      var sql = "INSERT INTO `jmdatabase`.`orders` ( `name`, `price`, `QTY`) VALUES ('"+name+"','"+price+"','"+QTY+"')";
+
+      var query = db.query(sql, function (err, result) {
+
+        console.log("items have been added")
+
+      })
+    } else {
+
+
+
+    }
+
+
+}
+
+

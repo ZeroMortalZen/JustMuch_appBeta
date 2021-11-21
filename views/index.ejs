@@ -7,11 +7,18 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
+     <link href="routes/users.js">
 
 
 </head>
 
+<script>
+	var myCart = [];
+	var Checkout ={};
+
+	var  prices =["3","5","1","0.50","2"];
+
+</script>
 
 
 
@@ -43,27 +50,70 @@
 
 		<div class="Menu">
 
-			<ul>
+
 				<p><img src='public/images/Double-Cheeseburger.jpg' alt="Image" height="200" width="200"></p>
-				<li><button class="add-to-cart" href="#" data-name="Double Cheeseburger " data-price="3.50">Double Cheeseburger $3.50</button></li>
+			<p align="center"><a>Double Cheeseburger $3</a></p>
+			<select id="Double_Cheeseburger_qty" name="select-native-1" id="select-native-1" data-mini="true"  >
+
+				<option value="">Choose an quantity</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<button id="addtocart" onclick="addToCart('Double_Cheeseburger_qty')" name="3"> Add To Cart </button>
 
 				<p><img src='public/images/pizza.jpg' alt="Image" height="200" width="200"></p>
-				<li><button class="add-to-cart" href="#" data-name="Pizza " data-price="9.93">Pizza $9.93</button></li>
+			<p align="center"><a>Pizza $5</a></p>
+			<select id="pizza_qty" name="select-native-2" id="select-native-2" data-mini="true">
+				<option value="">Choose an quantity</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<button id="addtocart" onclick="addToCart('pizza_qty')"name="5"> Add To Cart </button>
 
 				<p><img src='public/images/Chips.jpg' alt="Image" height="200" width="200"></p>
-				<li><button class="add-to-cart" href="#" data-name="Chips" data-price="1.50">Chips $1.50</button></li>
+			<p align="center"><a>Chips $2</a></p>
+			<select id="Chips_qty" name="select-native-3" id="select-native-3" data-mini="true">
+				<option value="">Choose an quantity</option>
+				<option value="1">1 </option>
+				<option value="2">2 </option>
+				<option value="3">3 </option>
+				<option value="4">4 </option>
+			</select>
+			<button id="addtocart" onclick="addToCart('Chips_qty')"name="2"> Add To Cart </button>
 
 				<p><img src='public/images/Mayo.jpg' alt="Image" height="200" width="200"></p>
-				<li><button class="add-to-cart" href="#" data-name="Spicy Mayo" data-price="0.50">Spicy Mayo Dip $0.50</button></li>
-			</ul>
+			<p align="center"><a>Spicy Mayo $0.50</a></p>
+			<select id="Spicy_Mayo_qty" name="select-native-3" id="select-native-4" data-mini="true">
+				<option value="">Choose an quantity</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<button id="addtocart" onclick="addToCart('Spicy_Mayo_qty')"name="0.50"> Add To Cart </button>
+
+			<p><img src='public/images/coke.jpg' alt="Image" height="200" width="200"></p>
+			<p align="center"><a>Coke $1</a></p>
+			<select id="Coke_qty" name="select-native-5" id="select-native-5" data-mini="true">
+				<option value="">Choose an quantity</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+			<button id="addtocart" onclick="addToCart('Coke_qty');" name="1" > Add To Cart </button>
+
+
+
+
+
 		</div>
-
-
 							<!---end of menu----->
-	<div data-role="footer">
-		<h4>Page Footer</h4>
-	</div><!-- /footer -->
-</div><!-- /page -->
+
 
 
 <!---Checkout Section----->
@@ -78,16 +128,26 @@
 			<div>You have <span id="count-cart">X</span> items in your cart</div>
 			<div>Total Cart:$<span id="total-cart"></span></div>
 
-			<button id="clear-cart">Clear Cart</button>
+
 
 		</div>
 
 
 
-		<button id ="button" onclick="DBconnect()"><a href="#two" >Purchase</a></button>
 
+		<button id="add-order" type="submit" >Purchase</button>
+
+		<button id="clear-cart">Clear Cart</button>
 		<p><a href="#foo">Back to foo</a></p>
-	  </div>
+	</div>
+
+
+
+
+		<div data-role="footer">
+		<h4>Page Footer</h4>
+	</div><!-- /footer -->
+</div><!-- /page -->
 	<!-- /content -->
 
 	<!-- Start of second page -->
@@ -108,20 +168,9 @@
 	</div><!-- /page -->
 
 
-
-
-
-
-
-
-
-
-
-
-
 		<!--Scripts---->
 
-		<script src="public/javascripts/shoppingCart.js"></script>
+		<!--<script src="public/javascripts/shoppingCart.js"></script>-->
 
 
 		<script>
@@ -130,87 +179,233 @@
 
 
 
+
 			//Checkout System
 
-				$(".add-to-cart").click(function(event){
-					event.preventDefault();
-					var name = $(this).attr("data-name");
-					var price = Number($(this).attr("data-price"));
+				//$(".add-to-cart").click(function(event){
+					//event.preventDefault();
+					//var name = $(this).attr("data-name");
+					//var price = Number($(this).attr("data-price"));
 
-					shoppingCart.addItemToCart(name, price, 1);
-					displayCart();
+					//shoppingCart.addItemToCart(name, price, 1);
+					//displayCart();
+				//});
+
+
+
+
+
+			//$("#clear-cart").click(function(event){
+				//shoppingCart.clearCart();
+				//displayCart();
+			//});
+
+			//function displayCart() {
+				//var cartArray = shoppingCart.listCart();
+				//console.log(cartArray);
+
+				//var output = "";
+
+				//for (var i in cartArray) {
+					//output += "<li>"
+							//+cartArray[i].name
+							//+" <input class='item-count' type='number' data-name='"
+							//+cartArray[i].name
+							//+"' value='"+cartArray[i].count+"' >"
+							//+" x "+cartArray[i].price
+							//+" = "+cartArray[i].total
+							//+" <button class='plus-item' data-name='"
+							//+cartArray[i].name+"'>+</button>"
+							//+" <button class='subtract-item' data-name='"
+							//+cartArray[i].name+"'>-</button>"
+							//+" <button class='delete-item' data-name='"
+							//+cartArray[i].name+"'>X</button>"
+							//+"</li>";
+				//}
+
+				//$("#show-cart").html(output);
+				//$("#count-cart").html( shoppingCart.countCart() );
+				//$("#total-cart").html( shoppingCart.totalCart() );
+			//}
+
+			//$("#show-cart").on("click", ".delete-item", function(event){
+				//var name = $(this).attr("data-name");
+				//shoppingCart.removeItemFromCartAll(name);
+				//displayCart();
+			//});
+
+			//$("#show-cart").on("click", ".subtract-item", function(event){
+				//var name = $(this).attr("data-name");
+				//shoppingCart.removeItemFromCart(name);
+				//displayCart();
+			//});
+
+			//$("#show-cart").on("click", ".plus-item", function(event){
+				//var name = $(this).attr("data-name");
+				//shoppingCart.addItemToCart(name, 0, 1);
+				//displayCart();
+			//});
+
+			//$("#show-cart").on("change", ".item-count", function(event){
+				//var name = $(this).attr("data-name");
+				//var count = Number($(this).val());
+				//shoppingCart.setCountForItem(name, count);
+				//displayCart();
+			//});
+
+
+			//displayCart();
+
+			//var cartArray = shoppingCart.listCart();
+
+
+			//Store  items into database
+
+			function addToCart(itemName){
+
+				// finding out the name of the ITEM we are adding
+				var item = itemName;
+
+				console.log("Item Name:"+" "+item);
+
+				// dynamically find out the qty
+				var qty = $('#'+item).children("option:selected").val();
+
+				var x = 0;
+				var Sum =parseInt(x);
+				var TotalPrice =0;
+				if(item =="Double_Cheeseburger_qty"){
+					console.log("Works")
+					var y = prices[0];
+					var price =parseInt(y)
+					TotalPrice = price * qty;
+
+
+				}
+				else if(item == "pizza_qty"){
+					var a = prices[1];
+					var price = parseInt(a);
+					TotalPrice =price * qty;
+
+				}
+				else if(item == "Chips_qty"){
+					var a = prices[2];
+					var price = parseInt(a);
+					TotalPrice =price * qty;
+
+				}
+				else if(item == "Spicy_Mayo_qty"){
+					var a = prices[3];
+					var price = parseFloat(a);
+					TotalPrice =price * qty;
+
+				}
+				else if(item == "Coke_qty"){
+					var a = prices[4];
+					var price = parseInt(a);
+					TotalPrice =price * qty;
+
+				}
+
+
+
+
+				console.log("Price:"+" "+price);
+				console.log("Quantity:"+" "+qty);
+                console.log("Total Price:"+" "+TotalPrice);
+				// search the cart and see if we already added
+				// the item. If we did, remove the old qty.
+
+				myCart.forEach(function(itemCurrent, index, array) {
+
+
+
+					if(itemCurrent.includes(item)){
+						console.log("Removing previous reference to " + item);
+						myCart.pop(index);
+					}
+				});
+
+
+				// add the item to the cart
+				myCart.push(item + '-' + qty);
+
+				alert(myCart);
+
+
+
+				function getTotal() {
+					let total = 0
+					for (let i = 0; i < myCart.length; i += 1) {
+						total += myCart[i].price * myCart[i].qty
+					}
+					return total.toFixed(2)
+				}
+
+				function updateCart(name, qty) {
+					for (let i = 0; i < myCart.length; i += 1) {
+						if (myCart[i].item === name) {
+							myCart[i].qty = qty
+
+							return true
+						}
+					}
+					return false
+				}
+
+
+
+
+
+
+				//Import  to Database
+
+				$("#add-order").on("click",function (event) {
+
+
+					var TestItem=myCart[0].toString()
+					var TestQty=qty
+                    var Testprice = TotalPrice
+
+					console.log("Item:"+TestItem);
+					console.log("Qty:"+TestQty);
+
+					//Remeber to link this with manager page
+					$.post("/",
+							{
+								name:TestItem,
+								count:TestQty,
+								price:Testprice
+							},
+							function (data, status) {
+								console.log(data);
+							});
 				});
 
 
 
-
-
-			$("#clear-cart").click(function(event){
-				shoppingCart.clearCart();
-				displayCart();
-			});
-
-			function displayCart() {
-				var cartArray = shoppingCart.listCart();
-				console.log(cartArray);
-
-				var output = "";
-
-				for (var i in cartArray) {
-					output += "<li>"
-							+cartArray[i].name
-							+" <input class='item-count' type='number' data-name='"
-							+cartArray[i].name
-							+"' value='"+cartArray[i].count+"' >"
-							+" x "+cartArray[i].price
-							+" = "+cartArray[i].total
-							+" <button class='plus-item' data-name='"
-							+cartArray[i].name+"'>+</button>"
-							+" <button class='subtract-item' data-name='"
-							+cartArray[i].name+"'>-</button>"
-							+" <button class='delete-item' data-name='"
-							+cartArray[i].name+"'>X</button>"
-							+"</li>";
-				}
-
-				$("#show-cart").html(output);
-				$("#count-cart").html( shoppingCart.countCart() );
-				$("#total-cart").html( shoppingCart.totalCart() );
 			}
 
-			$("#show-cart").on("click", ".delete-item", function(event){
-				var name = $(this).attr("data-name");
-				shoppingCart.removeItemFromCartAll(name);
-				displayCart();
-			});
-
-			$("#show-cart").on("click", ".subtract-item", function(event){
-				var name = $(this).attr("data-name");
-				shoppingCart.removeItemFromCart(name);
-				displayCart();
-			});
-
-			$("#show-cart").on("click", ".plus-item", function(event){
-				var name = $(this).attr("data-name");
-				shoppingCart.addItemToCart(name, 0, 1);
-				displayCart();
-			});
-
-			$("#show-cart").on("change", ".item-count", function(event){
-				var name = $(this).attr("data-name");
-				var count = Number($(this).val());
-				shoppingCart.setCountForItem(name, count);
-				displayCart();
-			});
 
 
-			displayCart();
+
+
+
+
+
+
+
 
 
 
 
 
 		</script>
+
+
+
+
+
 		<!--end Script---->
 
 

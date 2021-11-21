@@ -1,4 +1,5 @@
 
+
 var shoppingCart = (function () {
     // Private methods and properties
     var cart = [];
@@ -19,6 +20,11 @@ var shoppingCart = (function () {
             cart = []
         }
     }
+
+    function getName() {
+     return name.get(this);
+    }
+
 
     loadCart();
 
@@ -119,17 +125,10 @@ var shoppingCart = (function () {
         return cartCopy;
     };
 
+
+
     // ----------------------------
     return obj;
 })();
 
-//Import items to database
-function DBconnect() {
-    console.log("All most there ")
-   // app.get("/", (req, res) => {
-        //let post = {name: "name", price: "price", count: "count"}
-        //let sql = "INSERT INTO "
 
-
-    //})
-}
