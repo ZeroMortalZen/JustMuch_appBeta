@@ -39,11 +39,18 @@ app.use(session({
 // development only
 
 app.get('/', routes.index);//call for main index page
-app.post('/', user.index);//call for main index post
+
 app.get('/signup', user.signup);//call for signup page
 app.post('/signup', user.signup);//call for signup post
-//app.get('/Login', routes.index);//call for login page
-//app.post('/Login', user.Login);//call for login post
+
+app.get('/Login', routes.index);//call for login page
+app.post('/Login', user.login);//call for login post
+
+app.get('/home/dashboard', user.dashboard);
+app.post('/home/dashboard', user.dashboard);
+
+app.get('/Manager',user.Manager);
+app.post('/Manager', user.Manager);
 
 //Middleware
 app.listen("3308", ()=>{
