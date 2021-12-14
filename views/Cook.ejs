@@ -12,5 +12,142 @@ Flour Qty = 100
    Remove From Stock[-]
 
 
->
+--->
+<!DOCTYPE html>
+<html>
+<body>
+<head>
+
+    <link href ="public/stylesheets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/stylesheets/MainTheme.css" />
+    <link rel="stylesheet" href="public/stylesheets/MainTheme.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link href="routes/users.js">
+
+
+</head>
+
+
+
+
+<div data-role="page">
+
+    <div data-role="header">
+        <link rel="stylesheet" type="text/stylesheet" href="public/stylesheet/style.css" />
+        <p><img src="public/images/Logo.jpg" alt="Image" height="100" width="100"></p>
+        <h1>Just Much Staff Member </h1>
+
+        <form action="#">
+            <fieldset>
+                <label for="salutation"></label>
+                <select name="salutation" id="salutation">
+                    <option disabled selected><img src='public/images/dropMenu.png' alt="Image" > </option>
+                    <option>Logout </option>
+                </select>
+            </fieldset>
+
+        </form>
+    </div>
+<!--- Customer Page ----->
+<div role="main" class="ui-content">
+    <button id="test" type="submit" class="btn btn-success" >Check Stock</button>
+
+</div>
+<!---Menu------>
+
+
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+    <div class="panel panel-info">
+
+        <div class="panel-body">
+            <table class="table table-striped">
+                <tr  class="bg-info">
+                    <th>Item</th>
+                    <th>QTY</th>
+                    <th>ADD</th>
+                    <th>Remove</th>
+                </tr>
+
+                <tbody id="myTable">
+
+                </tbody>
+            </table>
+
+
+            <!---end of menu----->
+
+
+
+
+
+
+
+
+
+            <div data-role="footer">
+            </div><!-- /footer -->
+        </div><!-- /page -->
+        <!-- /content -->
+
+
+
+
+        <!--Scripts---->
+        <script>
+            var myArray = []
+
+
+            $.ajax({
+                method:'GET',
+                url:'Manager',
+                success:function(response){
+                    myArray = response.data
+                    buildTable(myArray)
+                    console.log(myArray)
+                }
+            })
+
+
+
+            function buildTable(data){
+                var table = document.getElementById('myTable')
+
+                for (var i = 0; i < data.length; i++){
+                    var row = `<tr>
+							<td>${data[i].first_name}</td>
+							<td>${data[i].last_name}</td>
+							<td>${data[i].email}</td>
+					  </tr>`
+                    table.innerHTML += row
+
+
+                }
+            }
+        </script>
+
+
+
+
+
+        <!--end Script---->
+
+
+
+
+
+
+
+        <div data-role="footer">
+            <h4>Page Footer</h4>
+        </div><!-- /footer -->
+
+    </div><!-- /page -->
+    </body>
+    </html>
+
+
+
 

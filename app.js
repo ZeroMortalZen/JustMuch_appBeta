@@ -46,11 +46,14 @@ app.post('/signup', user.signup);//call for signup post
 app.get('/Login', routes.index);//call for login page
 app.post('/Login', user.login);//call for login post
 
-app.get('/home/dashboard', user.dashboard);
-app.post('/home/dashboard', user.dashboard);
+app.get('/Main', user.Main);//Main user page
+app.post('/Main', user.Main);//Main user post
 
-app.get('/Manager',user.Manager);
-app.post('/Manager', user.Manager);
+app.get('/Manager',user.Manager);//call for Manager page
+app.post('/Manager',user.Manager);//Call for Manager Post
+
+app.get('/Cook', user.Cook);//Call for Cook Page
+app.post('/Cook', user.Cook); //Call for Cook Post
 
 //Middleware
 app.listen("3308", ()=>{

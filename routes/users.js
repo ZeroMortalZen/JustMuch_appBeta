@@ -60,6 +60,7 @@ exports.signup = function (req,res) {
 
 /////Login Page Call
 exports.login = function(req, res,reject){
+  console.log("Error here 6")
   var message = '';
   var sess = req.session;
 
@@ -71,34 +72,54 @@ exports.login = function(req, res,reject){
     if (user && pass) {
       db.query('SELECT * FROM jmdatabase.register WHERE Username = ? AND Password = ?', [user, pass], function(error, results, fields) {
         if (results.length > 0) {
-          req.session.loggedin = true;
-          req.session.username = user;
+          console.log("Connected To User Database")
+
           //Normal Login for Normal user
-          if(user != null && user != "Manager"){
-            res.redirect('/home/dashboard');
+          if(user != null && user != "Manager"&& user != "Cook"){
+            console.log("Main paged has Loaded")
+            res.redirect("/Main")
             if (res.statusCode !== 200) {
               console.log(error);
+
             }
+
           }
           //Manager Login
           else if(user == "Manager"){
+            console.log("Manager Page has Loaded")
+            res.redirect("/Manager")
             if (res.statusCode !== 200) {
               console.log(error);
-
+              console.log("An error has occurred")
             }
-            console.log("Works here")
-            res.redirect('/Manager')
+
+            console.log("Testing")
+          }
+          else if(user =="Cook"){
+            console.log("Staff Member Page has Loaded")
+            res.redirect("/Cook")
+            if (res.statusCode !== 200) {
+              console.log(error);
+              console.log("Error")
+            }
+
+
           }
 
         } else {
-          res.send('Incorrect Username and/or Password!');
-          console.log('Please enter Username and Password!')
+
+
+
+
+          console.log('Please enter Username and Password! 2')
+
+
+
         }
         res.end();
       });
     } else {
-      res.send('Please enter Username and Password!');
-      console.log('Please enter Username and Password!')
+      console.log('Please enter Username and Password! 1')
       res.end();
     }
 
@@ -106,9 +127,9 @@ exports.login = function(req, res,reject){
 };
 
 
-exports.dashboard = function(req, res,next){
-
-    res.render('dashboard.ejs');
+exports.Main = function(req, res,next){
+  console.log("User Page")
+    res.render('Main.ejs');
      if (req.method == "POST") {
 
     var post = req.body;
@@ -132,23 +153,45 @@ exports.dashboard = function(req, res,next){
 };
 ///Manager
 exports.Manager = function (req,res,next) {
-  console.log("Connected Here")
-   res.render("Manager.ejs")
-    if(req.method =="POST"){
-     var post =req.body;
-     console.log("Manager Database Responded")
-     let choice = post
-     var sql ="SELECT * FROM `jmdatabase`.`orders`";
-   db.query((sql,function (err,rows,fields) {
-       console.log("Manager database has query")
-       if(err){
-            console.log(err);
-          }
-          else{
-            return console.log(res)
-          }
+  console.log("Rendered Manager Page")
 
-     }))
-   }
+
+  //Database Connection
+  var sql ="SELECT * FROM `jmdatabase`.`orders`";
+  db.query(sql,function (err,rows,fields) {
+    if(err){
+      console.log(err)
+      return
+    }
+    //Check data from database
+    console.log("Data from Database")
+    console.log(rows);
+
+    for(i=0;i<rows.length;i++){
+      var row =rows[i];
+      console.log(row.name)
+      console.log(row.price)
+      console.log(row.QTY)
+
+    }
+
+
+
+    res.render("Manager.ejs");
+    res.end(JSON.stringify(rows));
+    //
+
+  })
+
+  //res.send(200, );
+
 };
+exports.Cook = function (req,res,next) {
+  console.log("Rendered Staff Member Page")
+  res.render("Cook.ejs")
+
+
+};
+
+
 

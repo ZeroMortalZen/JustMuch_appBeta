@@ -3,15 +3,34 @@
 	<meta charset="UTF-8">
 	<title>Sample Site</title>
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+	<link href="public/stylesheets/themes/my-custom-theme.css" />
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+	<link href ="public/stylesheets/style.css" rel="stylesheet">
 
 </head>
+<link href ="public/stylesheets/style.css" rel="stylesheet">
+<script>
+	function empty() {
+		var x;
+		x = document.getElementById("WrongCred").value;
+		if (x == "") {
+			alert("Please insert empty value");
+			return false;
+		};
+	}
+</script>
+
+
 <body id="clrblk">
 <div class="container">
 	<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 		<div class="panel panel-info" >
 			<div class="panel-heading">
-				<div class="panel-title">Sign In</div>
-				<!--<div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>-->
+				<p><img src="public/images/Logo.jpg" alt="Image" height="100" width="100"></p>
+				<div class="panel-title" style="width:800px; margin:0 auto;" >Just Much: Sign In</div>
 			</div>
 
 			<div style="padding-top:30px" class="panel-body" >
@@ -30,7 +49,7 @@
 						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 						<input id="login-password" type="password" class="form-control" name="password" placeholder="password">
 					</div>
-
+					<p id="WrongCred" style="display:none">Incorrect Password or Username!</p>
 
 
 					<div class="input-group">
@@ -76,7 +95,137 @@
 </body>
 </html>
 <script>
+	var myCart = [];
+	var Checkout ={};
 
+	var  prices =["3","5","1","0.50","2"];
+
+	function addToCart(itemName){
+
+		// finding out the name of the ITEM we are adding
+		var item = itemName;
+
+		console.log("Item Name:"+" "+item);
+
+		// dynamically find out the qty
+		var qty = $('#'+item).children("option:selected").val();
+
+		var x = 0;
+		var Sum =parseInt(x);
+		var TotalPrice =0;
+		if(item =="Double_Cheeseburger_qty"){
+			console.log("Works")
+			var y = prices[0];
+			var price =parseInt(y)
+			TotalPrice = price * qty;
+
+
+		}
+		else if(item == "pizza_qty"){
+			var a = prices[1];
+			var price = parseInt(a);
+			TotalPrice =price * qty;
+
+		}
+		else if(item == "Chips_qty"){
+			var a = prices[2];
+			var price = parseInt(a);
+			TotalPrice =price * qty;
+
+		}
+		else if(item == "Spicy_Mayo_qty"){
+			var a = prices[3];
+			var price = parseFloat(a);
+			TotalPrice =price * qty;
+
+		}
+		else if(item == "Coke_qty"){
+			var a = prices[4];
+			var price = parseInt(a);
+			TotalPrice =price * qty;
+
+		}
+
+
+
+
+		console.log("Price:"+" "+price);
+		console.log("Quantity:"+" "+qty);
+		console.log("Total Price:"+" "+TotalPrice);
+		// search the cart and see if we already added
+		// the item. If we did, remove the old qty.
+
+		myCart.forEach(function(itemCurrent, index, array) {
+
+
+
+			if(itemCurrent.includes(item)){
+				console.log("Removing previous reference to " + item);
+				myCart.pop(index);
+			}
+		});
+
+
+		// add the item to the cart
+		myCart.push(item + '-' + qty);
+
+		alert(myCart);
+
+
+
+		function getTotal() {
+			let total = 0
+			for (let i = 0; i < myCart.length; i += 1) {
+				total += myCart[i].price * myCart[i].qty
+			}
+			return total.toFixed(2)
+		}
+
+		function updateCart(name, qty) {
+			for (let i = 0; i < myCart.length; i += 1) {
+				if (myCart[i].item === name) {
+					myCart[i].qty = qty
+
+					return true
+				}
+			}
+			return false
+		}
+
+
+
+
+
+
+		//Import  to Database
+
+		$("#add-order").on("click",function (event) {
+
+
+			var TestItem=myCart[0].toString()
+			var TestQty=qty
+			var Testprice = TotalPrice
+
+			console.log("Item:"+TestItem);
+			console.log("Qty:"+TestQty);
+
+			//Remeber to link this with manager page
+			$.post('/Main',
+					{
+						name:TestItem,
+						count:TestQty,
+						price:Testprice
+					},
+					function (data, status,error) {
+						console.log(data);
+						console.log(error)
+
+					});
+		})
+
+
+
+	}
 
 
 

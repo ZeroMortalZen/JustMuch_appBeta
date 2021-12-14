@@ -18,7 +18,6 @@
       };
     }
   </script>
-
 </head>
 <body>
 <div class="container col-sm-12" id="mainform">
@@ -27,10 +26,10 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <div class="panel-title">Sign Up</div>
-        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="">Sign In</a></div>
+        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="http://localhost:3308/">GO TO LOGIN PAGE</a></div>
       </div>
       <div class="panel-body" >
-        <form class="form-horizontal" role="form" method="post" action="/signup" onClick="return empty()">
+        <form class="form-horizontal" role="form" method="post" action="/login" onClick="return empty()">
           <% if (message.length > 0) { %>
             <div class="alert alert-success col-sm-12"><%= message %></div>
           <% } %>
